@@ -54,5 +54,4 @@ my-agenda-user-api/
 ## Links
 - [Actuator](http://localhost:3002/actuator)
 - [Swagger](http://localhost:3002/swagger-ui/index.html)
-- [Host](http://localhost:3002)
-```
+- [Health](http://localhost:3002/health)
