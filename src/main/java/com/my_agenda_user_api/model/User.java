@@ -1,5 +1,6 @@
 package com.my_agenda_user_api.model;
 
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.Size;
 
@@ -9,9 +10,11 @@ public class  User {
 
     @Email(message = "Invalid Email.")
     @Size(min = 2, message = "Min 2.")
+    @JsonProperty("email")
     private String email;
 
     @Size(min = 2)
+    @JsonProperty("user_name")
     private String userName;
 
     public User() {
