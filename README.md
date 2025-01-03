@@ -1,7 +1,7 @@
 # my-agenda-user-api
 
 ## Description
-My Agenda User API to manage users.
+This is a Spring Boot application for managing user data.
 
 ## Project Structure
 
@@ -12,6 +12,10 @@ my-agenda-user-api/
 │   │   ├── java/
 │   │   │   └── com/
 │   │   │       └── my_agenda_user_api/
+│   │   │           ├── controller/
+│   │   │           ├── exception/
+│   │   │           ├── model/
+│   │   │           └── service/
 │   │   └── resources/
 │   └── test/
 ├── pom.xml
@@ -46,3 +50,9 @@ my-agenda-user-api/
    ```sh
    docker run -p 3002:3002 my-agenda-user-api
    ```
+
+## Links
+- [Actuator](http://localhost:3002/actuator)
+- [Swagger](http://localhost:3002/swagger-ui/index.html)
+- [Host](http://localhost:3002)
+```
