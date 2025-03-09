@@ -1,5 +1,6 @@
 package com.my_agenda_user_api.shared.error;
 
+import com.my_agenda_user_api.exception.InvalidCredentialsException;
 import com.my_agenda_user_api.exception.UserNotFoundException;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
