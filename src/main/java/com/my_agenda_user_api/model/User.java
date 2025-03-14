@@ -7,74 +7,73 @@ import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
 
 @Entity(name = "user_info")
-public class  User {
+public class User {
 
-    @Id
-    @GeneratedValue
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Size(min = 2)
-    @NotNull(message = "User name is required.")
-    @JsonProperty("user_name")
-    private String userName;
+	@Size(min = 2)
+	@NotNull(message = "User name is required.")
+	@JsonProperty("user_name")
+	private String userName;
 
-    @Size(min = 2)
-    @NotNull(message = "Password is required.")
-    @JsonProperty("password")
-    private String password;
+	@Size(min = 2)
+	@NotNull(message = "Password is required.")
+	@JsonProperty("password")
+	private String password;
 
-    @OneToOne(cascade = CascadeType.ALL)
-    @Valid
-    @NotNull(message = "Person information is required.")
-    private Person person;
+	@OneToOne(cascade = CascadeType.ALL)
+	@Valid
+	@NotNull(message = "Person information is required.")
+	private Person person;
 
-    public User() {
-    }
+	public User() {
+	}
 
-    public User(Long id, String email, String userName) {
-        this.id = id;
-        this.userName = userName;
-    }
+	public User(Long id, String userName, String password, Person person) {
+		this.id = id;
+		this.userName = userName;
+		this.password = password;
+		this.person = person;
+	}
 
-    public Long getId() {
-        return id;
-    }
+	public Long getId() {
+		return id;
+	}
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getUserName() {
-        return userName;
-    }
+	public String getUserName() {
+		return userName;
+	}
 
-    public void setUserName(String userName) {
-        this.userName = userName;
-    }
+	public void setUserName(String userName) {
+		this.userName = userName;
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public String getPassword() {
+		return password;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public void setPassword(String password) {
+		this.password = password;
+	}
 
-    public Person getPerson() {
-        return person;
-    }
+	public Person getPerson() {
+		return person;
+	}
 
-    public void setPerson(Person person) {
-        this.person = person;
-    }
+	public void setPerson(Person person) {
+		this.person = person;
+	}
 
-    @Override
-    public String toString() {
-        return "User{" +
-                "id=" + id +
-                ", userName='" + userName + '\'' +
-                ", password='" + password + '\'' +
-                ", person=" + person +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "User{" + "id=" + id + ", userName='" + userName + '\'' + ", password='" + password + '\'' + ", person="
+				+ person + '}';
+	}
+
 }

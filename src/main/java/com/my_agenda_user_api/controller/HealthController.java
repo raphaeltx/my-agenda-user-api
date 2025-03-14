@@ -7,8 +7,9 @@ import org.springframework.http.ResponseEntity;
 @RestController
 public class HealthController {
 
-    @GetMapping("/health")
-    public ResponseEntity<String> healthCheck() {
-        return ResponseEntity.ok("Application is running...");
-    }
+	@GetMapping("/health")
+	public ResponseEntity<String> healthCheck() {
+		return ResponseEntity.ok("Application is running...");
+	}
+
 }

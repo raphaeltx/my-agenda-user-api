@@ -17,24 +17,30 @@ import java.time.LocalDateTime;
 @ControllerAdvice
 public class CustomResponseEntityExceptionHandler extends ResponseEntityExceptionHandler {
 
-    @ExceptionHandler(Exception.class)
-    public final ResponseEntity<ErrorDetails> handleAllException(Exception ex, WebRequest request) {
-        ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
+	@ExceptionHandler(Exception.class)
+	public final ResponseEntity<ErrorDetails> handleAllException(Exception ex, WebRequest request) {
+		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage(),
+				request.getDescription(false));
 
-        return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
-    }
+		return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.INTERNAL_SERVER_ERROR);
+	}
 
-    @ExceptionHandler(UserNotFoundException.class)
-    public final ResponseEntity<ErrorDetails> handleUserNotFoundException(UserNotFoundException ex, WebRequest request) {
-        ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage(), request.getDescription(false));
+	@ExceptionHandler(UserNotFoundException.class)
+	public final ResponseEntity<ErrorDetails> handleUserNotFoundException(UserNotFoundException ex,
+			WebRequest request) {
+		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getMessage(),
+				request.getDescription(false));
 
-        return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.NOT_FOUND);
-    }
+		return new ResponseEntity<ErrorDetails>(errorDetails, HttpStatus.NOT_FOUND);
+	}
 
-    @Override
-    public final ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex, HttpHeaders headers, HttpStatusCode status, WebRequest request) {
-        ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getFieldError().getDefaultMessage(), request.getDescription(false));
+	@Override
+	public final ResponseEntity<Object> handleMethodArgumentNotValid(MethodArgumentNotValidException ex,
+			HttpHeaders headers, HttpStatusCode status, WebRequest request) {
+		ErrorDetails errorDetails = new ErrorDetails(LocalDateTime.now(), ex.getFieldError().getDefaultMessage(),
+				request.getDescription(false));
 
-        return new ResponseEntity<Object>(errorDetails, HttpStatus.BAD_REQUEST);
-    }
+		return new ResponseEntity<Object>(errorDetails, HttpStatus.BAD_REQUEST);
+	}
+
 }

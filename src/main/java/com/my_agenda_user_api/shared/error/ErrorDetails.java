@@ -2,31 +2,33 @@ package com.my_agenda_user_api.shared.error;
 
 import java.time.LocalDateTime;
 
-
 public class ErrorDetails {
 
-    private LocalDateTime timestamp;
-    private String message;
-    private String Details;
+	private LocalDateTime timestamp;
 
-    public ErrorDetails() {
-    }
+	private String message;
 
-    public ErrorDetails(LocalDateTime timestamp, String message, String details) {
-        this.timestamp = timestamp;
-        this.message = message;
-        Details = details;
-    }
+	private String Details;
 
-    public LocalDateTime getTimestamp() {
-        return timestamp;
-    }
+	public ErrorDetails() {
+	}
 
-    public String getMessage() {
-        return message;
-    }
+	public ErrorDetails(LocalDateTime timestamp, String message, String details) {
+		this.timestamp = timestamp;
+		this.message = message;
+		Details = details;
+	}
 
-    public String getDetails() {
-        return Details;
-    }
+	public LocalDateTime getTimestamp() {
+		return timestamp;
+	}
+
+	public String getMessage() {
+		return message;
+	}
+
+	public String getDetails() {
+		return Details;
+	}
+
 }

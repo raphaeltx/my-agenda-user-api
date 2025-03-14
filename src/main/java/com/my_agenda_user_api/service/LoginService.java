@@ -5,35 +5,45 @@ import com.my_agenda_user_api.exception.UserNotFoundException;
 import com.my_agenda_user_api.model.User;
 import com.my_agenda_user_api.repository.UserRepository;
 import com.my_agenda_user_api.util.JwtUtil;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Component;
 
 @Component
 public class LoginService {
 
-    private final JwtUtil jwtUtil;
-    private final UserRepository userRepository;
+	private final JwtUtil jwtUtil;
 
-    public LoginService(JwtUtil jwtUtil, UserRepository userRepository) {
-        this.jwtUtil = jwtUtil;
-        this.userRepository = userRepository;
-    }
+	private final UserRepository userRepository;
 
-    public String authenticate(String email, String password) {
-        System.out.println("Email: " + email);
-        System.out.println("Password: " + password);
+	private final BCryptPasswordEncoder passwordEncoder;
 
-        User user = userRepository.findByPersonEmail(email);
+	public LoginService(JwtUtil jwtUtil, UserRepository userRepository, BCryptPasswordEncoder passwordEncoder) {
+		this.jwtUtil = jwtUtil;
+		this.userRepository = userRepository;
+		this.passwordEncoder = passwordEncoder;
+	}
 
-        System.out.println("User: " + user);
+	public String authenticate(String identifier, String password) {
+		User user = findUserByIdentifier(identifier);
+		validatePassword(password, user.getPassword());
+		return jwtUtil.generateToken(identifier);
+	}
 
-        if (user == null) {
-            throw new UserNotFoundException("Login failed. User not found. Email: " + email);
-        }
+	private User findUserByIdentifier(String identifier) {
+		User user = userRepository.findByPersonEmail(identifier);
+		if (user == null) {
+			user = userRepository.findByUserName(identifier);
+		}
+		if (user == null) {
+			throw new UserNotFoundException("Login failed. User not found. Identifier: " + identifier);
+		}
+		return user;
+	}
 
-        if (!user.getPassword().equals(password)) {
-            throw new InvalidCredentialsException("Login failed. Invalid password.");
-        }
+	private void validatePassword(String rawPassword, String encodedPassword) {
+		if (!passwordEncoder.matches(rawPassword, encodedPassword)) {
+			throw new InvalidCredentialsException("Login failed. Invalid password.");
+		}
+	}
 
-        return jwtUtil.generateToken(email);
-    }
 }

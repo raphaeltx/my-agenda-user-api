@@ -1,29 +1,42 @@
 package com.my_agenda_user_api.dto;
 
-import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotNull;
 
 public class LoginRequest {
-    @NotNull(message = "Email is required.")
-    @Email(message = "Email should be valid.")
-    private String email;
 
-    @NotNull(message = "Password is required.")
-    private String password;
+	@NotNull(message = "Identifier is required.")
+	private String identifier;
 
-    public String getEmail() {
-        return email;
-    }
+	@NotNull(message = "Password is required.")
+	private String password;
 
-    public void setEmail(String email) {
-        this.email = email;
-    }
+	public LoginRequest() {
+	}
 
-    public String getPassword() {
-        return password;
-    }
+	public LoginRequest(String identifier, String password) {
+		this.identifier = identifier;
+		this.password = password;
+	}
 
-    public void setPassword(String password) {
-        this.password = password;
-    }
+	public String getIdentifier() {
+		return identifier;
+	}
+
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
+	}
+
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
+	@Override
+	public String toString() {
+		return "LoginRequest{" + "identifier='" + identifier + '\'' + ", password='" + password + '\'' + '}';
+	}
+
 }
