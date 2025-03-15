@@ -6,8 +6,6 @@ import com.my_agenda_user_api.model.User;
 import com.my_agenda_user_api.repository.PersonRepository;
 import com.my_agenda_user_api.repository.UserRepository;
 import jakarta.transaction.Transactional;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -20,8 +18,6 @@ import java.util.List;
 @Service
 public class UserService implements UserDetailsService {
 
-	private static final Logger logger = LoggerFactory.getLogger(UserService.class);
-
 	private final UserRepository userRepository;
 
 	private final PersonRepository personRepository;
@@ -33,7 +29,6 @@ public class UserService implements UserDetailsService {
 		this.userRepository = userRepository;
 		this.personRepository = personRepository;
 		this.passwordEncoder = passwordEncoder;
-		logger.info("UserService instantiated");
 	}
 
 	public User findById(int id) {
@@ -55,6 +50,16 @@ public class UserService implements UserDetailsService {
 		if (user.getPerson() == null) {
 			throw new PersonNotFoundException("Person information is required.");
 		}
+
+		if (emailExists(user.getPerson().getEmail())) {
+			throw new IllegalArgumentException("Email already exists: " + user.getPerson().getEmail());
+		}
+
+		if (userNameExists(user.getUserName())) {
+			throw new IllegalArgumentException("User name already exists: " + user.getUserName());
+		}
+
+		System.out.println("User: " + user);
 
 		user.setPassword(passwordEncoder.encode(user.getPassword()));
 		personRepository.save(user.getPerson());
@@ -85,6 +90,14 @@ public class UserService implements UserDetailsService {
 		}
 
 		return userRepository.findAll();
+	}
+
+	private boolean emailExists(String email) {
+		return userRepository.existsByPersonEmail(email);
+	}
+
+	private boolean userNameExists(String userName) {
+		return userRepository.existsByUserName(userName);
 	}
 
 	@Override

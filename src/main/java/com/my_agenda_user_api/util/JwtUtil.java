@@ -3,8 +3,6 @@ package com.my_agenda_user_api.util;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
@@ -16,13 +14,11 @@ import java.util.function.Function;
 @Component
 public class JwtUtil {
 
-	private static final Logger logger = LoggerFactory.getLogger(JwtUtil.class);
 
 	@Value("${jwt.secret}")
 	private String secret;
 
 	public JwtUtil() {
-		logger.info("JwtUtil instantiated");
 	}
 
 	public String extractUsername(String token) {

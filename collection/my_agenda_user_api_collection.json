@@ -16,7 +16,7 @@
             "auth": {
               "type": "bearer",
               "bearer": {
-                "token": "eyJhbGciOiJIUzI1NiJ9.eyJzdWIiOiJhZG1pbiIsImV4cCI6MTc0MTk2MTYwNSwiaWF0IjoxNzQxOTI1NjA1fQ.EKVWQu_okAYp_CRQ9J7oEwY-RQR_nw00kzG4C4sLTfY"
+                "token": "{{jwt_token}}"
               }
             },
             "method": "GET",
@@ -28,6 +28,12 @@
         {
           "name": "Get User by ID",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "{{jwt_token}}"
+              }
+            },
             "method": "GET",
             "header": [],
             "url": {
@@ -52,6 +58,12 @@
         {
           "name": "Create User",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "{{jwt_token}}"
+              }
+            },
             "method": "POST",
             "header": [
               {
@@ -70,6 +82,12 @@
         {
           "name": "Delete User by ID",
           "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": {
+                "token": "{{jwt_token}}"
+              }
+            },
             "method": "DELETE",
             "header": [],
             "url": {
@@ -112,7 +130,19 @@
             },
             "url": "{{baseUrl}}/login"
           },
-          "response": []
+          "response": [],
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "exec": [
+                  "var jsonData = pm.response.json();",
+                  "pm.environment.set(\"jwt_token\", jsonData.data);"
+                ],
+                "type": "text/javascript"
+              }
+            }
+          ]
         }
       ]
     },
